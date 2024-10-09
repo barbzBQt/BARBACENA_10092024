@@ -1,8 +1,31 @@
+using BARBACENA_10092024.App.Repositories;
+using BARBACENA_10092024.App.Repositories.Interface;
+using BARBACENA_10092024.App.Services;
+using BARBACENA_10092024.App.Services.Interface;
+using BARBACENA_10092024.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<DataContext>(
+    o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
+{
+    builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+}));
+
+// Add Services
+builder.Services.AddScoped<IVideoService, VideoService>();
+
+// Add Repositories
+builder.Services.AddScoped<IVideoRepository, VideoRepository>();
 
 var app = builder.Build();
 
@@ -13,6 +36,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
