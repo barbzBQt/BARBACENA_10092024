@@ -26,6 +26,13 @@ namespace BARBACENA_10092024.App.Controllers
         [HttpPost("upload")]
         public async Task<IActionResult> UploadVideo([FromForm] VideoRequestModel request)
         {
+            request.Validate();
+
+            if (!string.IsNullOrEmpty(request.ErrorMessage))
+            {
+                return BadRequest(request.ErrorMessage);
+            }
+
             var result = await _service.UploadVideo(request);
             return Ok(result);
         }
