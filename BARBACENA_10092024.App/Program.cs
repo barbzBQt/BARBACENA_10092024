@@ -27,6 +27,22 @@ builder.Services.AddScoped<IVideoService, VideoService>();
 // Add Repositories
 builder.Services.AddScoped<IVideoRepository, VideoRepository>();
 
+// Retrieve the directory paths from appsettings
+List<string> paths = new List<string>()
+{
+    builder.Configuration.GetSection("Directories:Videos").Value,
+    builder.Configuration.GetSection("Directories:Thumbnails").Value
+};
+
+foreach (var path in paths)
+{
+    // Check if directory exists and create it if not
+    if (!Directory.Exists(path))
+    {
+        Directory.CreateDirectory(path);
+    }
+}
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
