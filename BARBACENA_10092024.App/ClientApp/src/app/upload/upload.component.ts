@@ -51,7 +51,7 @@ export class UploadComponent {
         }
       } else {
         alert('Please select a valid video file (MP4, AVI, MOV).');
-        input.value = ''; // Clear the input
+        input.value = '';
       }
     }
   }

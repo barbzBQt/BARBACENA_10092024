@@ -6,7 +6,7 @@ namespace BARBACENA_10092024.App.Services.Interface
 {
     public interface IVideoService
     {
-        Task<IEnumerable<Video>> GetAllVideos();
+        Task<IEnumerable<VideoModel>> GetAllVideos();
         Task<VideoResponseModel> UploadVideo(VideoRequestModel request);
     }
 }

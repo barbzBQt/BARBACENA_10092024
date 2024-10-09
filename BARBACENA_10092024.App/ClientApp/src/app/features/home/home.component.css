@@ -1,0 +1,14 @@
+img {
+  width: 256px;
+  height: 256px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tooltip {
+  background-color: rgba(0, 0, 0, 0.8); /* Dark background */
+  color: #fff; /* White text */
+  border-radius: 4px; /* Rounded corners */
+  padding: 5px; /* Padding */
+}

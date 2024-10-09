@@ -26,7 +26,7 @@ import { StreamComponent } from './features/stream/stream.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'upload', component: UploadComponent },
-      { path: 'stream/:path', component: StreamComponent },
+      { path: 'stream/:filename', component: StreamComponent },
     ])
   ],
   providers: [],
