@@ -34,7 +34,7 @@ Before running the application, ensure you have the following installed:
    ```bash
    git clone https://github.com/barbzBQt/BARBACENA_10092024.git
    cd video-upload-streaming/backend 
-2. Run Migration:
+2. Run the scripts fron BARBACENA_10092024\BARBACENA_10092024.Data\Scripts OR Run Migration:
    ```bash
    update-database
 3. Build Solution
