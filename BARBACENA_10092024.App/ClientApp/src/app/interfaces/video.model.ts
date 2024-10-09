@@ -4,4 +4,5 @@ export interface Video {
   categories: string;
   thumbnail: string;
   filePath: string;
+  fileName: string;
 }

@@ -17,9 +17,21 @@ namespace BARBACENA_10092024.App.Services
             _repo = repo;
         }
 
-        public async Task<IEnumerable<Video>> GetAllVideos()
+        public async Task<IEnumerable<VideoModel>> GetAllVideos()
         {
-            return await _repo.GetAllVideos();
+            var result = new List<VideoModel>();
+            
+            var videos = await _repo.GetAllVideos();
+            if (videos.Any())
+            {
+                foreach (var video in videos)
+                {
+                    var model = VideoModel.ParseToModel(video);
+                    result.Add(model);
+                }
+            }
+
+            return result;
         }
 
         public async Task<VideoResponseModel> UploadVideo(VideoRequestModel request)
@@ -27,7 +39,6 @@ namespace BARBACENA_10092024.App.Services
             try
             {
                 string videosPath = _config["Directories:Videos"];
-                string thumbnailsPath = _config["Directories:Thumbnails"];
 
                 var filePath = Path.Combine(videosPath, request.File.FileName);
 
@@ -38,7 +49,7 @@ namespace BARBACENA_10092024.App.Services
                 }
 
                 // Generate the thumbnail
-                var thumbnail = FileHelper.GenerateThumbnail(filePath, _config);
+                byte[] thumbnail = FileHelper.GenerateThumbnail(filePath, _config);
 
                 // Create and save video metadata
                 var video = new Video
@@ -47,7 +58,7 @@ namespace BARBACENA_10092024.App.Services
                     Description = request.Description,
                     Categories = request.Categories,
                     FileName = request.File.FileName,
-                    FilePath = $"{videosPath}/{request.File.FileName}",
+                    FilePath = $"{videosPath}\\{request.File.FileName}",
                     Thumbnail = thumbnail,
                     CreatedDate = DateTime.Now
                 };

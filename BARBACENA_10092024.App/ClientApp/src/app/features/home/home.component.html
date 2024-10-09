@@ -3,12 +3,17 @@
   <div class="row">
     <div class="col-md-4" *ngFor="let video of videos">
       <div class="card mb-4 shadow-sm">
-        <img [src]="video.thumbnail" class="card-img-top" alt="Thumbnail" width="256" height="256">
+        <img
+          [src]="'data:image/png;base64,' + video.thumbnail"
+          class="card-img-top"
+          alt="Thumbnail"
+          title="{{video.title}}"
+        >
         <div class="card-body">
           <h5 class="card-title">{{ video.title }}</h5>
           <p class="card-text">{{ video.description }}</p>
           <p><strong>Categories:</strong> {{ video.categories }}</p>
-          <a [routerLink]="['/stream', video.filePath]" class="btn btn-primary">Watch</a>
+          <a [routerLink]="['/stream', video.fileName]" class="btn btn-primary">Watch</a>
         </div>
       </div>
     </div>
