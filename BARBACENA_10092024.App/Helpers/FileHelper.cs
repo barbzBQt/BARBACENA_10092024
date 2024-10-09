@@ -1,27 +1,42 @@
-﻿using Xabe.FFmpeg;
+﻿using System.Diagnostics;
+using Xabe.FFmpeg;
 
 namespace BARBACENA_10092024.App.Helpers
 {
     public static class FileHelper
     {
-        public static double ConvertBytesToMb(double fileSize)
-        {
-            return fileSize / (1024 * 1024);
-        }
-
         public static string GenerateThumbnail(string videoPath, IConfiguration config)
         {
-            var resultPath = Path.Combine(config["ThumbnailDirectory"], Path.GetFileNameWithoutExtension(videoPath) + ".jpg");
+            //var sourceFilePath = Path.ChangeExtension(videoPath, ".jpg");
+            var thumbnailPath = Path.Combine(config["Directories:Thumbnails"], Path.GetFileNameWithoutExtension(videoPath) + ".jpg");
+            
+            // FFmpeg command to extract a frame at 1 second
+            string ffmpegArgs = $"-i \"{videoPath}\" -ss 00:00:01.000 -vframes 1 \"{thumbnailPath}\"";
 
-            // Ensure FFmpeg is initialized and ready to use
-            FFmpeg.SetExecutablesPath(@"C:\path\to\ffmpeg");  // Path where ffmpeg.exe is located on your machine
+            // Execute FFmpeg process
+            RunFFmpegProcess(ffmpegArgs, config);
 
-            // Generate a thumbnail at 5 seconds into the video
-            var conversion = FFmpeg.Conversions.FromSnippet.Snapshot(videoPath, resultPath, TimeSpan.FromSeconds(5));
+            return Path.GetFileName(thumbnailPath);
+        }
 
-            conversion.Start();
+        private static void RunFFmpegProcess(string arguments, IConfiguration config)
+        {
+            var ffmpegPath = Path.Combine(config["Ffmpeg"], "ffmpeg.exe");
 
-            return resultPath;
+            var processStartInfo = new ProcessStartInfo
+            {
+                FileName = ffmpegPath,
+                Arguments = arguments,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using (var process = new Process { StartInfo = processStartInfo })
+            {
+                process.Start();
+            }
         }
     }
 }

@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-4" *ngFor="let video of videos">
       <div class="card mb-4 shadow-sm">
-        <img [src]="video.thumbnail" class="card-img-top" alt="Thumbnail">
+        <img [src]="video.thumbnail" class="card-img-top" alt="Thumbnail" width="256" height="256">
         <div class="card-body">
           <h5 class="card-title">{{ video.title }}</h5>
           <p class="card-text">{{ video.description }}</p>

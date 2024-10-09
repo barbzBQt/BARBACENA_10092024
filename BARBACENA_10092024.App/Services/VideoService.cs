@@ -26,7 +26,10 @@ namespace BARBACENA_10092024.App.Services
         {
             try
             {
-                var filePath = Path.Combine(_config["VideoDirectory"], request.File.FileName);
+                string videosPath = _config["Directories:Videos"];
+                string thumbnailsPath = _config["Directories:Thumbnails"];
+
+                var filePath = Path.Combine(videosPath, request.File.FileName);
 
                 // Save the video file
                 using (var stream = new FileStream(filePath, FileMode.Create))
@@ -34,7 +37,7 @@ namespace BARBACENA_10092024.App.Services
                     await request.File.CopyToAsync(stream);
                 }
 
-                // Generate a thumbnail (you can implement a method to extract a frame from the video)
+                // Generate the thumbnail
                 var thumbnail = FileHelper.GenerateThumbnail(filePath, _config);
 
                 // Create and save video metadata
@@ -44,8 +47,8 @@ namespace BARBACENA_10092024.App.Services
                     Description = request.Description,
                     Categories = request.Categories,
                     FileName = request.File.FileName,
-                    FilePath = $"{_config["VideoDirectory"]}/{request.File.FileName}",
-                    Thumbnail = $"{_config["VideoDirectory"]}/{request.File.FileName}.jpg",
+                    FilePath = $"{videosPath}/{request.File.FileName}",
+                    Thumbnail = thumbnail,
                     CreatedDate = DateTime.Now
                 };
 
