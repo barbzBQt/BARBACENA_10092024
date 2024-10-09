@@ -42,7 +42,7 @@ Before running the application, ensure you have the following installed:
 6. Install http-server
    ```bash
    npm install -g http-server
-7. Run the local server for accessing and the files
+7. Run the local server for accessing the files
    ```bash
    cd C:\BARBACENA_10092024
    http-server
