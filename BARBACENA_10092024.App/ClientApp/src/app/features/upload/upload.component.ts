@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { VideoService } from '../services/video.service';
+import { VideoService } from '../../services/video.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
