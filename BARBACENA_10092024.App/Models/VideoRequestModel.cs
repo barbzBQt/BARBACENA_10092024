@@ -24,6 +24,8 @@ namespace BARBACENA_10092024.App.Models
             {
                 errorMessages.Add("Please select a valid video file (MP4, AVI, MOV).");
             }
+
+            ErrorMessage = string.Join('\n', errorMessages);
         }
     }
 }
