@@ -1,0 +1,5 @@
+﻿ IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'BARBACENA_10092024_db')
+  BEGIN
+    CREATE DATABASE [DataBase]
+  END
+ GO
