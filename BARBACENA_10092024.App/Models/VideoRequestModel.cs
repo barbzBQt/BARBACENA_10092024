@@ -9,8 +9,7 @@ namespace BARBACENA_10092024.App.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public string Categories { get; set; }
-        public string ErrorMessage { get; set; }
-        public string Thumbnail { get; set; }
+        public string? ErrorMessage { get; set; }
 
         public void Validate()
         {

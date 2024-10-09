@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[Videos](
 	[Description] [nvarchar](max) NOT NULL,
 	[Categories] [nvarchar](max) NOT NULL,
 	[FileName] [nvarchar](max) NOT NULL,
-	[Thumbnail] [nvarchar](max) NOT NULL,
+	[Thumbnail] [varbinary](max) NOT NULL,
 	[FilePath] [nvarchar](max) NOT NULL,
 	[CreatedDate] [datetime2](7) NOT NULL,
  CONSTRAINT [PK_Videos] PRIMARY KEY CLUSTERED 

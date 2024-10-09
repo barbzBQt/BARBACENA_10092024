@@ -7,8 +7,8 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './features/nav-menu/nav-menu.component';
 import { HomeComponent } from './features/home/home.component';
-import { UploadComponent } from './upload/upload.component';
 import { StreamComponent } from './features/stream/stream.component';
+import { UploadComponent } from './features/upload/upload.component';
 
 @NgModule({
   declarations: [

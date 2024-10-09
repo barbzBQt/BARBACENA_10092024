@@ -39,7 +39,6 @@ namespace BARBACENA_10092024.App.Services
             try
             {
                 string videosPath = _config["Directories:Videos"];
-                string thumbnailsPath = _config["Directories:Thumbnails"];
 
                 var filePath = Path.Combine(videosPath, request.File.FileName);
 
@@ -50,7 +49,7 @@ namespace BARBACENA_10092024.App.Services
                 }
 
                 // Generate the thumbnail
-                var thumbnail = Convert.FromBase64String(request.Thumbnail);
+                byte[] thumbnail = FileHelper.GenerateThumbnail(filePath, _config);
 
                 // Create and save video metadata
                 var video = new Video
@@ -59,7 +58,7 @@ namespace BARBACENA_10092024.App.Services
                     Description = request.Description,
                     Categories = request.Categories,
                     FileName = request.File.FileName,
-                    FilePath = $"{videosPath}/{request.File.FileName}",
+                    FilePath = $"{videosPath}\\{request.File.FileName}",
                     Thumbnail = thumbnail,
                     CreatedDate = DateTime.Now
                 };

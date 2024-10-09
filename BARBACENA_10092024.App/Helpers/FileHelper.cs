@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
-using Xabe.FFmpeg;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace BARBACENA_10092024.App.Helpers
 {
@@ -17,40 +19,40 @@ namespace BARBACENA_10092024.App.Helpers
             return validFileTypes.Contains(Path.GetExtension(fileName).ToLower());
         }
 
+        public static byte[] GenerateThumbnail(string videoPath, IConfiguration config)
+        {            
+            // FFmpeg command to extract a frame at 1 second
+            string ffmpegArgs = $"-i \"{videoPath}\" -ss 00:00:01 -vframes 1 -vf \"scale=256:256\" -f image2 pipe:1";
 
+            // Execute FFmpeg process
 
-        //public static string GenerateThumbnail(string videoPath, IConfiguration config)
-        //{
-        //    //var sourceFilePath = Path.ChangeExtension(videoPath, ".jpg");
-        //    var thumbnailPath = Path.Combine(config["Directories:Thumbnails"], Path.GetFileNameWithoutExtension(videoPath) + ".jpg");
-        //    
-        //    // FFmpeg command to extract a frame at 1 second
-        //    string ffmpegArgs = $"-i \"{videoPath}\" -ss 00:00:01.000 -vframes 1 \"{thumbnailPath}\"";
-        //
-        //    // Execute FFmpeg process
-        //    RunFFmpegProcess(ffmpegArgs, config);
-        //
-        //    return Path.GetFileName(thumbnailPath);
-        //}
-        //
-        //private static void RunFFmpegProcess(string arguments, IConfiguration config)
-        //{
-        //    var ffmpegPath = Path.Combine(config["Ffmpeg"], "ffmpeg.exe");
-        //
-        //    var processStartInfo = new ProcessStartInfo
-        //    {
-        //        FileName = ffmpegPath,
-        //        Arguments = arguments,
-        //        RedirectStandardOutput = true,
-        //        RedirectStandardError = true,
-        //        UseShellExecute = false,
-        //        CreateNoWindow = true
-        //    };
-        //
-        //    using (var process = new Process { StartInfo = processStartInfo })
-        //    {
-        //        process.Start();
-        //    }
-        //}
+            return RunFFmpegProcess(ffmpegArgs, config);
+        }
+        
+        private static byte[] RunFFmpegProcess(string arguments, IConfiguration config)
+        {
+            var ffmpegPath = Path.Combine(config["Ffmpeg"], "ffmpeg.exe");
+        
+            var processStartInfo = new ProcessStartInfo
+            {
+                FileName = ffmpegPath,
+                Arguments = arguments,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+        
+            using (var process = new Process { StartInfo = processStartInfo })
+            {
+                process.Start();
+                using (var ms = new MemoryStream())
+                {
+                    process.StandardOutput.BaseStream.CopyTo(ms);
+                    process.WaitForExit();
+                    return ms.ToArray();
+                }
+            }
+        }
     }
 }

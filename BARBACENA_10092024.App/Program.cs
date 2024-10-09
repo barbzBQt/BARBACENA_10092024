@@ -31,7 +31,7 @@ builder.Services.AddScoped<IVideoRepository, VideoRepository>();
 List<string> paths = new List<string>()
 {
     builder.Configuration.GetSection("Directories:Videos").Value,
-    builder.Configuration.GetSection("Directories:Thumbnails").Value
+    builder.Configuration.GetSection("Directories:Ffmpeg").Value
 };
 
 foreach (var path in paths)

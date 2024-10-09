@@ -1,8 +1,6 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Video } from 'src/app/interfaces/video.model';
 import { VideoService } from 'src/app/services/video.service';
-
-declare var bootstrap: any; // Declare bootstrap to access tooltip
 
 @Component({
   selector: 'app-home',
@@ -18,11 +16,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.videoService.getAllVideos().subscribe((data) => {
-      this.videos = data.map(video => ({
-        ...video,
-        thumbnail: this.serverUrl + 'Thumbnails/' + video.thumbnail,
-      }));
-
+      this.videos = data;
     });
   }
 }
